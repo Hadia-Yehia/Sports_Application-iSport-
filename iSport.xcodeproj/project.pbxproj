@@ -17,6 +17,8 @@
 		0E32D8242A1AAF21003B49D9 /* iSportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32D8232A1AAF21003B49D9 /* iSportTests.swift */; };
 		0E32D82E2A1AAF21003B49D9 /* iSportUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32D82D2A1AAF21003B49D9 /* iSportUITests.swift */; };
 		0E32D8302A1AAF21003B49D9 /* iSportUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32D82F2A1AAF21003B49D9 /* iSportUITestsLaunchTests.swift */; };
+		0E32D83F2A1AB5F0003B49D9 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32D83E2A1AB5F0003B49D9 /* NetworkService.swift */; };
+		0E32D8432A1ABA77003B49D9 /* AllLeagues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32D8422A1ABA77003B49D9 /* AllLeagues.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		0E32D8292A1AAF21003B49D9 /* iSportUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iSportUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E32D82D2A1AAF21003B49D9 /* iSportUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iSportUITests.swift; sourceTree = "<group>"; };
 		0E32D82F2A1AAF21003B49D9 /* iSportUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iSportUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0E32D83E2A1AB5F0003B49D9 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		0E32D8422A1ABA77003B49D9 /* AllLeagues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLeagues.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 		0E32D8082A1AAF1E003B49D9 /* iSport */ = {
 			isa = PBXGroup;
 			children = (
+				0E32D8402A1ABA34003B49D9 /* Model */,
+				0E32D83C2A1AB5AE003B49D9 /* Services */,
 				0E32D8092A1AAF1E003B49D9 /* AppDelegate.swift */,
 				0E32D80B2A1AAF1E003B49D9 /* SceneDelegate.swift */,
 				0E32D80D2A1AAF1E003B49D9 /* ViewController.swift */,
@@ -128,6 +134,30 @@
 				0E32D82F2A1AAF21003B49D9 /* iSportUITestsLaunchTests.swift */,
 			);
 			path = iSportUITests;
+			sourceTree = "<group>";
+		};
+		0E32D83C2A1AB5AE003B49D9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0E32D83D2A1AB5BF003B49D9 /* Networking */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0E32D83D2A1AB5BF003B49D9 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				0E32D83E2A1AB5F0003B49D9 /* NetworkService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		0E32D8402A1ABA34003B49D9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0E32D8422A1ABA77003B49D9 /* AllLeagues.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,9 +291,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E32D83F2A1AB5F0003B49D9 /* NetworkService.swift in Sources */,
 				0E32D8142A1AAF1E003B49D9 /* iSport.xcdatamodeld in Sources */,
 				0E32D80E2A1AAF1E003B49D9 /* ViewController.swift in Sources */,
 				0E32D80A2A1AAF1E003B49D9 /* AppDelegate.swift in Sources */,
+				0E32D8432A1ABA77003B49D9 /* AllLeagues.swift in Sources */,
 				0E32D80C2A1AAF1E003B49D9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
