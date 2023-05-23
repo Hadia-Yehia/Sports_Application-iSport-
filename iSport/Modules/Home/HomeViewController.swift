@@ -10,20 +10,15 @@ import UIKit
 class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var homeCollectionView: UICollectionView!
-    var result : [League]?
-    var names = ["Football","Basket","Tennis","Cricket"]
+    var result : [League]!
+    var names = ["Football","Basketball","Tennis","Cricket"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         homeCollectionView.dataSource = self
         homeCollectionView.delegate = self
         // Do any additional setup after loading the view.
-//        NetworkService.loadData {[weak self] (result) in
-//            self?.result = result?.result
-//            DispatchQueue.main.async {
-//                print(result?.result?.first?.country_name ?? "no data")
-//          }
-//        }
+
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (collectionView.bounds.width*0.45), height: collectionView.bounds.width*0.7)
@@ -49,6 +44,23 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         cell.layer.cornerRadius = 8
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let leaguesVC = storyboard?.instantiateViewController(withIdentifier: "AllLeaguesViewController") as! AllLeaguesViewController
+        leaguesVC.game = names[indexPath.row].lowercased()
+        //getData(game: names[indexPath.row].lowercased())
+//        NetworkService.loadData(game: names[indexPath.row].lowercased()) {[weak self] (result) in
+//                    self?.result = result?.result
+//                    DispatchQueue.main.async {
+//                        print(result?.result?.first?.country_name ?? "no data")
+//                        leaguesVC.gameLeagues = self?.result ?? Array<League>()
+//                        leaguesVC.allLeaguesTable.reloadData()
+//                        
+//                  }
+//                }
+        
+        navigationController?.pushViewController(leaguesVC, animated: true)
+    }
+   
     
 
 
