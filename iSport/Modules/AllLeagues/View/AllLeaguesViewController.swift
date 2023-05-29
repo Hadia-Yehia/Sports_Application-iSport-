@@ -14,7 +14,7 @@ class AllLeaguesViewController: UIViewController{
     @IBOutlet weak var allLeaguesTable: UITableView!
     @IBOutlet weak var allLeaguesSearchBar: UISearchBar!
     var game = ""
-    var gameLeagues = AllLeaguesStruct([])
+   // var gameLeagues = AllLeaguesStruct([])
     var viewModel = ViewModel()
     override func viewDidLoad() {
         
@@ -37,19 +37,20 @@ class AllLeaguesViewController: UIViewController{
                 if isLoading{
                     self.allLeaguesActivityIndicator.startAnimating()
                 }else {
+                    self.reloadTableView()
                     self.allLeaguesActivityIndicator.stopAnimating()
                 }
             }
             
         }
-        viewModel.cellDataSource.bind {[weak self] leagues in
-            guard let self = self, let leagues = leagues else {
-                return
-            }
-            self.gameLeagues = leagues
-            self.reloadTableView()
-            
-        }
+//        viewModel.cellDataSource.bind {[weak self] leagues in
+//            guard let self = self, let leagues = leagues else {
+//                return
+//            }
+//            self.gameLeagues = leagues
+       
+//            
+//        }
     }
   
 
