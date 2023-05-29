@@ -20,4 +20,8 @@ class AllLeaguesCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
+    func configCell(league : AllLeaguesStruct){
+        allLeaguesCellLabel.text = league.name
+        allLeaguesCellImg.image = UIImage(named: "pngegg")
+    }
 }
