@@ -11,6 +11,7 @@ class LeagueDetailsViewController: UIViewController {
     
     
     
+    @IBOutlet weak var leagueDetailsActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var secondCollectionVIew: UICollectionView!
     @IBOutlet weak var tabelView: UITableView!
     @IBOutlet weak var firstCollectionVIew: UICollectionView!
@@ -26,6 +27,7 @@ class LeagueDetailsViewController: UIViewController {
         viewModel?.getUpcomingEvents()
         viewModel?.getLatestEvents()
         viewModel?.getAllTeams()
+        
     }
     func bindViewModel() {
         viewModel?.isLoading.bind {[weak self] isLoading in
@@ -34,12 +36,12 @@ class LeagueDetailsViewController: UIViewController {
             }
             print("henaa\(isLoading)")
             DispatchQueue.main.async {
-                if isLoading == 3{
+                if isLoading % 3 == 0{
+                    self.leagueDetailsActivityIndicator.stopAnimating()
                     self.reloadTableView()
                     self.reloadCollectioViews()
                 }else {
-                   
-                    
+                    self.leagueDetailsActivityIndicator.startAnimating()
                 }
             }
             

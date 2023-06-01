@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class AllLeaguesCell: UITableViewCell {
 
@@ -22,6 +23,8 @@ class AllLeaguesCell: UITableViewCell {
     }
     func configCell(league : AllLeaguesStruct){
         allLeaguesCellLabel.text = league.name
-        allLeaguesCellImg.image = UIImage(named: "pngegg")
+        allLeaguesCellImg.sd_setImage(with:URL(string: league.img ?? ""), placeholderImage: UIImage(named: "pngegg"))
+        
     }
+    
 }

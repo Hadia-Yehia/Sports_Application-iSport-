@@ -10,7 +10,7 @@ import Foundation
 struct AllLeaguesStruct {
     var name : String?
     var img : String?
-    init(name: String? = "", img: String? = "") {
+    init(name: String = "", img: String = "") {
         self.name = name
         self.img = img
     }
@@ -50,4 +50,15 @@ struct UpcomingEventsStruct {
             self.result = result
         }
         
+        
+}
+struct TeamDetailsStruct {
+    var img : String?
+    var name : String?
+    var coach : String?
+    init(img: String? = "", name: String? = "", coach: String? = "") {
+        self.img = img
+        self.name = name
+        self.coach = coach
+    }
 }

@@ -43,14 +43,6 @@ class AllLeaguesViewController: UIViewController{
             }
             
         }
-//        viewModel.cellDataSource.bind {[weak self] leagues in
-//            guard let self = self, let leagues = leagues else {
-//                return
-//            }
-//            self.gameLeagues = leagues
-       
-//            
-//        }
     }
   
 

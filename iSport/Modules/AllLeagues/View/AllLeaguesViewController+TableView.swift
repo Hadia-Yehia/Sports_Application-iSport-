@@ -20,6 +20,7 @@ extension AllLeaguesViewController : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "allleaguescell") as! AllLeaguesCell
         cell.configCell(league: viewModel.getObjectOfCell(index: indexPath.row))
+        designCellImg(cell: cell)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

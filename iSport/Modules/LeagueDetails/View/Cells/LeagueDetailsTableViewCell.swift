@@ -29,8 +29,8 @@ class LeagueDetailsTableViewCell: UITableViewCell {
     func configCell (event : LatestEventsStruct){
         timeLabel.text = event.time
         dateLabel.text = event.date
-        firstImg.image = UIImage(named: "pngegg")
-        secondImg.image = UIImage(named: "pngegg")
+        firstImg.sd_setImage(with: URL(string: event.firstTeamImg ?? ""),placeholderImage: UIImage(named: "pngegg"))
+        secondImg.sd_setImage(with: URL(string: event.secondTeamImg ?? ""),placeholderImage: UIImage(named: "pngegg"))
         firstTeamLabel.text = event.firstTeamName
         secondTeamLabel.text = event.secondTeamName
         result.text = event.result
