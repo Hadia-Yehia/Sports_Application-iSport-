@@ -24,7 +24,6 @@ class ViewModel{
             switch result{
             case .success(let data):
                 self?.game = game
-                print("leagues\(data?.result?.first?.league_key ?? 0)")
                 self?.dataSource = data?.result ?? []
             case .failure(let error):
                 print("error\(error.localizedDescription)")

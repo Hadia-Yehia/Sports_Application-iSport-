@@ -20,7 +20,7 @@ extension LeagueDetailsViewController : UICollectionViewDelegate, UICollectionVi
         case firstCollectionVIew:
             return viewModel?.getFirstCollectionCount() ?? 0
         case secondCollectionVIew:
-            return 10
+            return viewModel?.getSecondCollectionCount() ?? 0
         default:
             return 0
         }
@@ -29,6 +29,8 @@ extension LeagueDetailsViewController : UICollectionViewDelegate, UICollectionVi
     func reloadCollectioViews(){
         DispatchQueue.main.async {
             self.firstCollectionVIew.reloadData()
+            self.secondCollectionVIew.reloadData()
+            
         }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -42,9 +44,21 @@ extension LeagueDetailsViewController : UICollectionViewDelegate, UICollectionVi
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "secondcell", for: indexPath) as! SecondLeagueDetailsCollectionViewCell
-            cell.img.image = UIImage(named: "pngegg")
+            cell.configCell(logo: viewModel?.getDataOfSecondCollectionCell(index: indexPath.row) ?? "")
+            designCell(cell: cell)
             makeImgRounded(image: cell.img, radius: cell.img.frame.height/2)
             return cell
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch collectionView{
+        case secondCollectionVIew:
+            let teamDetailsVC = storyboard?.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
+            teamDetailsVC.viewModel = viewModel?.navigateToDetailsScreen(index: indexPath.row)
+            navigationController?.pushViewController(teamDetailsVC, animated: true)
+            break
+        default:
+            break
         }
     }
     func makeImgRounded(image : UIImageView, radius:CGFloat){
@@ -64,4 +78,12 @@ extension LeagueDetailsViewController : UICollectionViewDelegate, UICollectionVi
         cell.layer.cornerRadius = 40
         cell.clipsToBounds = true
     }
+    func designCell(cell : SecondLeagueDetailsCollectionViewCell){
+        cell.layer.borderWidth = 1
+        cell.layer.masksToBounds = false
+        cell.layer.borderColor = UIColor.black.cgColor
+        cell.layer.cornerRadius = 40
+        cell.clipsToBounds = true
+    }
+
 }

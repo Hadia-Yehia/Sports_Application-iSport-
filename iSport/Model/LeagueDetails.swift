@@ -24,8 +24,8 @@ struct Event : Decodable{
         var event_first_player_logo : String?
         var event_second_player_logo : String?
         var event_date_stop : String?
-        var event_first_team : String?
-        var event_second_team : String?
+        var event_first_player : String?
+        var event_second_player : String?
        var event_home_final_result : String?
        var event_away_final_result : String?
 }

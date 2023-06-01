@@ -8,8 +8,8 @@
 import Foundation
 class LeagueDetailsViewModel{
     var isLoading : Observable<Int> = Observable(value: 0)
-    var leaguesKey = 0
-    var game = ""
+    var leaguesKey : Int
+    var game : String
     var load = 0
     var upcoming : UpcomingEventsStruct?
     var latest : LatestEventsStruct?
@@ -25,15 +25,15 @@ class LeagueDetailsViewModel{
 //            return
 //        }
 //        isLoading.value = true
+       
         NetworkService.getDataOfUpComingEvents(game: self.game , leagueKey: self.leaguesKey){[weak self] result in
             //self?.isLoading.value = false
             self?.load += 1
-            self?.isLoading.value = 2
+            self?.isLoading.value = self?.load
             
             switch result{
             case .success(let data):
                 self?.upcomingDataSource = data?.result ?? []
-                print(("hadia\(data?.result?.first?.event_home_team ?? "")"))
                 break
             case .failure(let error):
                 print("error\(error.localizedDescription)")
@@ -49,7 +49,7 @@ class LeagueDetailsViewModel{
             switch result{
             case .success(let data):
                 self?.latestDataSource = data?.result ?? []
-                print(("hadia\(data?.result?.first?.event_final_result ?? "")"))
+                
                 break
             case .failure(let error):
                 print("error\(error.localizedDescription)")
@@ -66,7 +66,8 @@ class LeagueDetailsViewModel{
             switch result{
             case .success(let data):
                 self?.allTeamsDataSource = data?.result ?? []
-                print("hadia\(data?.result?.first?.team_logo ?? "")")
+                
+                
                 break
             case .failure(let error):
                 print("error\(error.localizedDescription)")
@@ -95,11 +96,17 @@ class LeagueDetailsViewModel{
         case "basketball":
             latest = LatestEventsStruct(date: obj.event_date,time: obj.event_time, firstTeamName: obj.event_home_team, secondTeamName: obj.event_away_team,firstTeamImg:obj.event_home_team_logo,secondTeamImg: obj.event_away_team_logo,result: obj.event_final_result)
             break
+        case "tennis":
+            latest = LatestEventsStruct(date: obj.event_date,time: obj.event_time, firstTeamName: obj.event_first_player, secondTeamName: obj.event_second_player,firstTeamImg:obj.event_first_player_logo,secondTeamImg: obj.event_second_player_logo,result: obj.event_final_result)
+            break
+        case "cricket":
+            latest = LatestEventsStruct(date: obj.event_date_stop,time: obj.event_time, firstTeamName: obj.event_home_team, secondTeamName: obj.event_away_team,firstTeamImg:obj.event_home_team_logo,secondTeamImg: obj.event_away_team_logo,result: "\(String(describing: obj.event_home_final_result))-\( String(describing: obj.event_away_final_result))")
+            break
             
         default:
-            latest = LatestEventsStruct()
+            latest = LatestEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "",secondTeamImg: "",result: "No Data")
         }
-        return latest ?? LatestEventsStruct()
+        return latest ??  LatestEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "",secondTeamImg: "",result: "No Data")
     }
     
     
@@ -112,11 +119,26 @@ class LeagueDetailsViewModel{
         case "basketball":
             upcoming = UpcomingEventsStruct(date: obj.event_date,time: obj.event_time, firstTeamName: obj.event_home_team, secondTeamName: obj.event_away_team,firstTeamImg:obj.event_home_team_logo,secondTeamImg: obj.event_away_team_logo)
             break
+        case "tennis":
+            upcoming = UpcomingEventsStruct(date: obj.event_date,time: obj.event_time, firstTeamName: obj.event_first_player, secondTeamName: obj.event_second_player,firstTeamImg:obj.event_first_player_logo,secondTeamImg: obj.event_second_player_logo)
+            break
+        case "cricket":
+            upcoming = UpcomingEventsStruct(date: obj.event_date_stop,time: obj.event_time, firstTeamName: obj.event_home_team, secondTeamName: obj.event_away_team,firstTeamImg:obj.event_home_team_logo,secondTeamImg: obj.event_away_team_logo)
+            break
             
         default:
-            upcoming = UpcomingEventsStruct()
+            upcoming = UpcomingEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "",secondTeamImg: "")
         }
-        return upcoming ?? UpcomingEventsStruct()
+        return upcoming ??  UpcomingEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "",secondTeamImg: "")
+    }
+    func getDataOfSecondCollectionCell(index : Int) -> String{
+        return allTeamsDataSource[index].team_logo ?? ""
+    }
+    func navigateToDetailsScreen(index : Int) -> TeamDetailsViewModel {
+        let teamID = allTeamsDataSource[index].team_key
+        let game = self.game
+        return TeamDetailsViewModel(teamID: teamID ?? 0 , game: game)
+        
     }
     
 }
