@@ -35,6 +35,7 @@ extension AllLeaguesViewController : UITableViewDelegate,UITableViewDataSource{
             let leagueDetailsVC = self.storyboard?.instantiateViewController(withIdentifier: "leaguedetails") as! LeagueDetailsViewController
         leagueDetailsVC.viewModel = viewModel.navigateToDetailsScreen(index: indexPath.row)
         //        viewModel.getLeagueDetails(game: game, leagueKey: gameLeagues.leagueKeys[indexPath.row])
+        //allLeaguesSearchBar.text = ""
                navigationController?.pushViewController(leagueDetailsVC, animated: true)
     }
     func designCellImg(cell: AllLeaguesCell){

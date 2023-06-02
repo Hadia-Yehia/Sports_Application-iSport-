@@ -34,6 +34,10 @@ class TeamDetailsViewModel{
     }
         }
     }
+    func saveTeam(){
+        let team = FavTeamData(img: dataSource?.team_logo ?? "", name: dataSource?.team_name ?? "", key: teamID)
+        FavDatabase.saveTeamToDataBase(team:  team)
+    }
     func getDataOfTableViewCell(index : Int) -> Player {
         guard let player = dataSource?.players?[index] else { return Player() }
         return player
