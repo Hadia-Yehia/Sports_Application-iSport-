@@ -7,26 +7,32 @@
 
 import UIKit
 
-class AllLeaguesViewController: UIViewController{
+class AllLeaguesViewController: UIViewController,UISearchBarDelegate{
    
     @IBOutlet weak var allLeaguesActivityIndicator: UIActivityIndicatorView!
-    
     @IBOutlet weak var allLeaguesTable: UITableView!
     @IBOutlet weak var allLeaguesSearchBar: UISearchBar!
     var game = ""
    // var gameLeagues = AllLeaguesStruct([])
-    var viewModel = ViewModel()
+    var viewModel = AllLeaguesViewModel()
     override func viewDidLoad() {
         
         super.viewDidLoad()
          setupTableView()
         bindViewModel()
+        allLeaguesSearchBar.delegate = self
+        viewModel.getData(game: game)
         
 
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.search(searchText: searchText)
+        allLeaguesTable.reloadData()
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel.getData(game: game)
+        
     }
     func bindViewModel() {
         viewModel.isLoading.bind {[weak self] isLoading in
@@ -44,6 +50,7 @@ class AllLeaguesViewController: UIViewController{
             
         }
     }
+    
   
 
 }

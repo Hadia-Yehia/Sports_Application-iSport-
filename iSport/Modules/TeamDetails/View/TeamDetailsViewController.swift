@@ -47,5 +47,12 @@ class TeamDetailsViewController: UIViewController {
     }
     
 
-
+    @IBOutlet weak var favBtn: UIButton!
+    @IBAction func addToFav(_ sender: UIButton) {
+        viewModel?.saveTeam()
+        favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+    }
+    
+    
 }
+

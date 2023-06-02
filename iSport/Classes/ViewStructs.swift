@@ -52,13 +52,24 @@ struct UpcomingEventsStruct {
         
         
 }
-struct TeamDetailsStruct {
-    var img : String?
-    var name : String?
-    var coach : String?
-    init(img: String? = "", name: String? = "", coach: String? = "") {
+//struct TeamDetailsStruct {
+//    var img : String?
+//    var name : String?
+//    var coach : String?
+//    init(img: String? = "", name: String? = "", coach: String? = "") {
+//        self.img = img
+//        self.name = name
+//        self.coach = coach
+//    }
+//}
+struct FavTeamData{
+    var img : String
+    var name : String
+    var key : Int
+    init(img: String, name: String, key: Int) {
         self.img = img
         self.name = name
-        self.coach = coach
+        self.key = key
     }
-}
+    }
+
