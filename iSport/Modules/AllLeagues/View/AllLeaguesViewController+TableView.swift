@@ -32,11 +32,17 @@ extension AllLeaguesViewController : UITableViewDelegate,UITableViewDataSource{
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if NetworkReachability.sharedInstance.check(){
             let leagueDetailsVC = self.storyboard?.instantiateViewController(withIdentifier: "leaguedetails") as! LeagueDetailsViewController
-        leagueDetailsVC.viewModel = viewModel.navigateToDetailsScreen(index: indexPath.row)
-        //        viewModel.getLeagueDetails(game: game, leagueKey: gameLeagues.leagueKeys[indexPath.row])
-        //allLeaguesSearchBar.text = ""
-               navigationController?.pushViewController(leagueDetailsVC, animated: true)
+            leagueDetailsVC.viewModel = self.viewModel.navigateToDetailsScreen(index: indexPath.row)
+            self.navigationController?.pushViewController(leagueDetailsVC, animated: true)
+        }
+        else{
+        
+            let alert = UIAlertController(title: "Network issue", message: "No connection", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     func designCellImg(cell: AllLeaguesCell){
         cell.allLeaguesCellImg.backgroundColor = UIColor.lightGray

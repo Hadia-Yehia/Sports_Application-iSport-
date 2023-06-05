@@ -29,7 +29,7 @@ class PlayerTableViewCell: UITableViewCell {
         playerName.text = player.player_name
         playerMatches.text = player.player_match_played
         playerposition.text = player.player_type
-        playerImg.sd_setImage(with:URL(string: player.player_image ?? ""), placeholderImage: UIImage(named: "pngegg"))
+        playerImg.sd_setImage(with:URL(string: player.player_image ?? ""), placeholderImage: UIImage(named: "placeholder"))
     }
     
 }

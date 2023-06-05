@@ -10,7 +10,7 @@ import Foundation
 class AllLeaguesViewModel{
     var isLoading : Observable<Bool> = Observable(value: false)
 
-    var leagueForCell = AllLeaguesStruct(name: "", img: "")
+    var leagueForCell = AllLeaguesStruct(name: "No Data", img: "placeholder")
     var dataSource: [League] = Array<League>()
     var filteredDataSource : [League] = Array<League>()
     var game : String?
@@ -20,7 +20,7 @@ class AllLeaguesViewModel{
             return
         }
         isLoading.value = true
-        NetworkService.loadDataFromApi(game: game){[weak self] result in
+        NetworkService.getAllLeagues(game: game){[weak self] result in
             self?.isLoading.value = false
             switch result{
             case .success(let data):
@@ -58,7 +58,7 @@ class AllLeaguesViewModel{
     func navigateToDetailsScreen(index : Int) -> LeagueDetailsViewModel {
         let leagueKey = filteredDataSource[index].league_key
         let game = self.game
-        return LeagueDetailsViewModel(leaguesKey: leagueKey ?? 0,game: game ?? "")
+        return LeagueDetailsViewModel(leaguesKey: leagueKey ?? 0,game: game ?? "No Data")
     }
     
 }

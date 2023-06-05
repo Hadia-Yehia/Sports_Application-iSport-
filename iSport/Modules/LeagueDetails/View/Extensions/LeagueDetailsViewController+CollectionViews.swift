@@ -44,7 +44,7 @@ extension LeagueDetailsViewController : UICollectionViewDelegate, UICollectionVi
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "secondcell", for: indexPath) as! SecondLeagueDetailsCollectionViewCell
-            cell.configCell(logo: viewModel?.getDataOfSecondCollectionCell(index: indexPath.row) ?? "")
+            cell.configCell(logo: viewModel?.getDataOfSecondCollectionCell(index: indexPath.row) ?? "placeholder")
             designCell(cell: cell)
             makeImgRounded(image: cell.img, radius: cell.img.frame.height/2)
             return cell
@@ -53,11 +53,18 @@ extension LeagueDetailsViewController : UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView{
         case secondCollectionVIew:
-            let teamDetailsVC = storyboard?.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
-            teamDetailsVC.viewModel = viewModel?.navigateToDetailsScreen(index: indexPath.row)
-            navigationController?.pushViewController(teamDetailsVC, animated: true)
+            if NetworkReachability.sharedInstance.check(){
+                let teamDetailsVC = self.storyboard?.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
+                teamDetailsVC.viewModel = self.viewModel?.navigateToDetailsScreen(index: indexPath.row)
+                self.navigationController?.pushViewController(teamDetailsVC, animated: true)
+            }else {
+                
+                let alert = UIAlertController(title: "Network issue", message: "No connection", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+            }
             break
-        default:
+            default:
             break
         }
     }

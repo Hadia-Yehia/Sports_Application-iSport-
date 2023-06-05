@@ -18,8 +18,8 @@ class FirstLeagueDetailsCollectionViewCell: UICollectionViewCell {
     func configCell (event : UpcomingEventsStruct){
         timeLabel.text = event.time
         dateLabel.text = event.date
-        firstImg.sd_setImage(with: URL(string: event.firstTeamImg ?? ""),placeholderImage: UIImage(named: "pngegg"))
-        secondImg.sd_setImage(with: URL(string: event.secondTeamImg ?? ""),placeholderImage: UIImage(named: "pngegg"))
+        firstImg.sd_setImage(with: URL(string: event.firstTeamImg ?? "placeholder"),placeholderImage: UIImage(named: "placeholder"))
+        secondImg.sd_setImage(with: URL(string: event.secondTeamImg ?? "placeholder"),placeholderImage: UIImage(named: "placeholder"))
         firstTeamName.text = event.firstTeamName
         secondTeamName.text = event.secondTeamName
     }
