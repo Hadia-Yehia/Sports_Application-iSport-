@@ -8,10 +8,11 @@
 import UIKit
 
 class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-    
+
     @IBOutlet weak var homeCollectionView: UICollectionView!
     var result : [League]!
     var names = ["Football","Basketball","Tennis","Cricket"]
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! HomeCollectionViewCell
-        cell.homeCellImg.image = UIImage(named: "pngegg")
+        cell.homeCellImg.image = UIImage(named: names[indexPath.row].lowercased())
         cell.homeCellLabel.text = names[indexPath.row]
         cell.backgroundColor = UIColor.white
         cell.layer.borderColor = UIColor.black.cgColor
@@ -45,20 +46,17 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let leaguesVC = storyboard?.instantiateViewController(withIdentifier: "AllLeaguesViewController") as! AllLeaguesViewController
-        leaguesVC.game = names[indexPath.row].lowercased()
-        //getData(game: names[indexPath.row].lowercased())
-//        NetworkService.loadData(game: names[indexPath.row].lowercased()) {[weak self] (result) in
-//                    self?.result = result?.result
-//                    DispatchQueue.main.async {
-//                        print(result?.result?.first?.country_name ?? "no data")
-//                        leaguesVC.gameLeagues = self?.result ?? Array<League>()
-//                        leaguesVC.allLeaguesTable.reloadData()
-//                        
-//                  }
-//                }
-        
-        navigationController?.pushViewController(leaguesVC, animated: true)
+    
+        if NetworkReachability.sharedInstance.check(){
+            let leaguesVC = self.storyboard?.instantiateViewController(withIdentifier: "AllLeaguesViewController") as! AllLeaguesViewController
+                        leaguesVC.game = self.names[indexPath.row].lowercased()
+                     self.navigationController?.pushViewController(leaguesVC, animated: true)
+        }else{
+            let alert = UIAlertController(title: "Network issue", message: "No connection", preferredStyle: .alert)
+             alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+    
+        }
     }
    
     

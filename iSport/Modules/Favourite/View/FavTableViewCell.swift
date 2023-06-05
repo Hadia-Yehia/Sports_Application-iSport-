@@ -23,7 +23,7 @@ class FavTableViewCell: UITableViewCell {
     }
     func configCell(team : FavTeamData) {
         favLabel.text = team.name
-        favImg.sd_setImage(with: URL(string: team.img), placeholderImage: UIImage(named: "pngegg"))
+        favImg.sd_setImage(with: URL(string: team.img), placeholderImage: UIImage(named: "placeholder"))
     }
 
 }

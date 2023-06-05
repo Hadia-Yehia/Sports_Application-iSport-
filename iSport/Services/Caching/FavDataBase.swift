@@ -19,6 +19,7 @@ class FavDatabase {
         dbTeam.setValue(team.key, forKey: "key")
         dbTeam.setValue(team.img, forKey: "image")
         dbTeam.setValue(team.name, forKey: "name")
+       dbTeam.setValue(team.game, forKey: "game")
         do{
             try context.save()
             print("data added successfully")
@@ -37,10 +38,11 @@ class FavDatabase {
         do{
              teams = try context.fetch(fetchReq)
             for i in 0..<teams.count{
-                var obj = FavTeamData(img:"",name: "",key: 0)
+                var obj = FavTeamData(img:"",name: "",key: 0,game: "")
                 obj.key =  teams[i].value(forKey: "key") as! Int
                 obj.img = teams[i].value(forKey: "image") as! String
                 obj.name = teams[i].value(forKey: "name") as! String
+                obj.game = teams[i].value(forKey: "game") as! String
                 array.append(obj)
             }
     

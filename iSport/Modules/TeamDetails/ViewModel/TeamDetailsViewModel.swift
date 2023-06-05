@@ -26,7 +26,6 @@ class TeamDetailsViewModel{
             case .success(let data):
                 self?.dataSource = data?.result?.first
                 print (self?.teamID ?? -1)
-                print("yousra" + (self?.dataSource?.team_name ?? "yousra bardo" ))
                 break
             case .failure(let error):
                 print("error\(error.localizedDescription)")
@@ -35,7 +34,7 @@ class TeamDetailsViewModel{
         }
     }
     func saveTeam(){
-        let team = FavTeamData(img: dataSource?.team_logo ?? "", name: dataSource?.team_name ?? "", key: teamID)
+        let team = FavTeamData(img: dataSource?.team_logo ?? "placeholder", name: dataSource?.team_name ?? "No Data", key: teamID, game: game)
         FavDatabase.saveTeamToDataBase(team:  team)
     }
     func getDataOfTableViewCell(index : Int) -> Player {
@@ -47,12 +46,12 @@ class TeamDetailsViewModel{
         
     }
     func getTeamName()->String{
-        return dataSource?.team_name ?? ""
+        return dataSource?.team_name ?? "No Data"
     }
     func getTeamLogo() -> String{
-        return dataSource?.team_logo ?? ""
+        return dataSource?.team_logo ?? "placeholder"
     }
     func getCoachName() -> String{
-        return dataSource?.coaches?.first?.coach_name ?? ""
+        return dataSource?.coaches?.first?.coach_name ?? "No Data"
     }
 }

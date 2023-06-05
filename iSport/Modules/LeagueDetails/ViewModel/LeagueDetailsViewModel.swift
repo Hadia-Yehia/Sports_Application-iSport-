@@ -13,7 +13,8 @@ class LeagueDetailsViewModel{
     var load = 0
     var upcoming : UpcomingEventsStruct?
     var latest : LatestEventsStruct?
-    var allTeamsDataSource : [Team] = Array<Team>()
+    var allPlayersDataSource : [TennisPlayer]?
+    var allTeamsDataSource : [TeamDetails]?
     var latestDataSource : [Event] = Array<Event>()
     var upcomingDataSource : [Event] = Array<Event>()
     init(leaguesKey: Int , game: String) {
@@ -60,21 +61,41 @@ class LeagueDetailsViewModel{
         }
     }
     func getAllTeams(){
-        NetworkService.getTeams(game: self.game, leagueKey: self.leaguesKey){[weak self] result in
-            self?.load += 1
-            self?.isLoading.value = self?.load
-            switch result{
-            case .success(let data):
-                self?.allTeamsDataSource = data?.result ?? []
-                
-                
-                break
-            case .failure(let error):
-                print("error\(error.localizedDescription)")
-                break
+        switch game {
+        case "tennis":
+            NetworkService.getPlayers(game: self.game, leagueKey: self.leaguesKey){[weak self] result in
+                self?.load += 1
+                self?.isLoading.value = self?.load
+                switch result{
+                case .success(let data):
+                    self?.allPlayersDataSource = data?.result
+                    break
+                case .failure(let error):
+                    print("error\(error.localizedDescription)")
+                    break
+                    
+                }
                 
             }
+            break
+        default:
             
+            NetworkService.getTeams(game: self.game, leagueKey: self.leaguesKey){[weak self] result in
+                self?.load += 1
+                self?.isLoading.value = self?.load
+                switch result{
+                case .success(let data):
+                    self?.allTeamsDataSource = data?.result ?? []
+                    
+                    
+                    break
+                case .failure(let error):
+                    print("error\(error.localizedDescription)")
+                    break
+                    
+                }
+                
+            }
         }
     }
     
@@ -85,7 +106,13 @@ class LeagueDetailsViewModel{
         return upcomingDataSource.count
     }
     func getSecondCollectionCount() -> Int{
-        return allTeamsDataSource.count
+        switch game{
+        case "tennis":
+            return allPlayersDataSource?.count ?? 0
+        default:
+            return allTeamsDataSource?.count ?? 0
+        }
+        
     }
     func getDataOfTableCell(index: Int ) -> LatestEventsStruct{
         let obj = latestDataSource[index]
@@ -104,9 +131,9 @@ class LeagueDetailsViewModel{
             break
             
         default:
-            latest = LatestEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "",secondTeamImg: "",result: "No Data")
+            latest = LatestEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "placeholder",secondTeamImg: "placeholder",result: "No Data")
         }
-        return latest ??  LatestEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "",secondTeamImg: "",result: "No Data")
+        return latest ??  LatestEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "placeholder",secondTeamImg: "placeholder",result: "No Data")
     }
     
     
@@ -127,15 +154,22 @@ class LeagueDetailsViewModel{
             break
             
         default:
-            upcoming = UpcomingEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "",secondTeamImg: "")
+            upcoming = UpcomingEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "placeholder",secondTeamImg: "placeholder")
         }
-        return upcoming ??  UpcomingEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "",secondTeamImg: "")
+        return upcoming ??  UpcomingEventsStruct(date : "No Data", time: "No Data",firstTeamName: "No Data",secondTeamName: "No Data",firstTeamImg: "placeholder",secondTeamImg: "placeholder")
     }
     func getDataOfSecondCollectionCell(index : Int) -> String{
-        return allTeamsDataSource[index].team_logo ?? ""
-    }
+        switch game{
+        case "tennis":
+            return allPlayersDataSource?[index].player_logo ?? "placeholder"
+            
+        default:
+            return allTeamsDataSource?[index].team_logo ?? "placeholder"
+        }}
+    
+    
     func navigateToDetailsScreen(index : Int) -> TeamDetailsViewModel {
-        let teamID = allTeamsDataSource[index].team_key
+        let teamID = allTeamsDataSource?[index].team_key
         let game = self.game
         return TeamDetailsViewModel(teamID: teamID ?? 0 , game: game)
         

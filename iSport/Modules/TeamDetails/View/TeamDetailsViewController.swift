@@ -38,7 +38,7 @@ class TeamDetailsViewController: UIViewController {
                     self.reloadTableView()
                     self.teamName.text = self.viewModel?.getTeamName()
                     self.teamCoach.text = self.viewModel?.getCoachName()
-                    self.teamImg.sd_setImage(with: URL(string: self.viewModel?.getTeamLogo() ?? ""), placeholderImage: UIImage(named: "pngegg"))
+                    self.teamImg.sd_setImage(with: URL(string: self.viewModel?.getTeamLogo() ?? "placeholder"), placeholderImage: UIImage(named: "placeholder"))
                    // self.allLeaguesActivityIndicator.stopAnimating()
                 }
             }
