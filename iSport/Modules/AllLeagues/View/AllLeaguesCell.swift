@@ -23,7 +23,7 @@ class AllLeaguesCell: UITableViewCell {
     }
     func configCell(league : AllLeaguesStruct){
         allLeaguesCellLabel.text = league.name
-        allLeaguesCellImg.sd_setImage(with:URL(string: league.img ?? "placeholder"), placeholderImage: UIImage(named: "placeholder"))
+        allLeaguesCellImg.sd_setImage(with:URL(string: league.img ?? ""), placeholderImage: UIImage(named: "placeholder"))
         
     }
     

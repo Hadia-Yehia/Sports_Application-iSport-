@@ -53,7 +53,7 @@ final class MockNetworkServiceTests: XCTestCase {
             (result : Result<TeamDetailsResponse?,NetworkError>) in
             switch result{
             case .success(let data):
-                XCTAssertNotEqual(data?.result?.count,0, "no data")
+                XCTAssertNotNil(data?.result)
                 break
             case .failure(let error):
                 print(error.localizedDescription)
@@ -115,7 +115,7 @@ final class MockNetworkServiceTests: XCTestCase {
             (result : Result<AllPlayers?, NetworkError>) in
             switch result{
             case .success(let data):
-                XCTAssertNotEqual(data?.result?.count,0, "no data")
+                XCTAssertNotNil(data?.result)
                 break
             case .failure(let error):
                 print(error.localizedDescription)

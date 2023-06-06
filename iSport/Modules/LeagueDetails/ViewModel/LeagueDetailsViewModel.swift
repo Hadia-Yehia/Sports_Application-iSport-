@@ -108,9 +108,9 @@ class LeagueDetailsViewModel{
     func getSecondCollectionCount() -> Int{
         switch game{
         case "tennis":
-            return allPlayersDataSource?.count ?? 0
+            return allPlayersDataSource?.count ?? 1
         default:
-            return allTeamsDataSource?.count ?? 0
+            return allTeamsDataSource?.count ?? 1
         }
         
     }

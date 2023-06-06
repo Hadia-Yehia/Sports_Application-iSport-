@@ -34,7 +34,7 @@ class LeagueDetailsViewController: UIViewController {
             guard let self = self , let isLoading = isLoading else{
                 return
             }
-            print("henaa\(isLoading)")
+          
             DispatchQueue.main.async {
                 if isLoading % 3 == 0{
                     self.leagueDetailsActivityIndicator.stopAnimating()

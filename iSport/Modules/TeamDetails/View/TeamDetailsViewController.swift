@@ -8,7 +8,7 @@
 import UIKit
 
 class TeamDetailsViewController: UIViewController {
-
+    var valid : Bool = true
     @IBOutlet weak var playersTable: UITableView!
     @IBOutlet weak var teamCoach: UILabel!
     @IBOutlet weak var teamName: UILabel!
@@ -18,12 +18,19 @@ class TeamDetailsViewController: UIViewController {
         super.viewDidLoad()
         bindViewModel()
         setupTableView()
+        
         // Do any additional setup after loading the view.
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel?.getTeamDetails()
-        
+        guard let  validity = viewModel?.checkValidity() else{return}
+        valid = validity
+        if valid {
+            favBtn.setImage(UIImage(systemName: "heart"), for: .normal)
+        }else{
+            favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
         
     }
     func bindViewModel() {
@@ -38,7 +45,7 @@ class TeamDetailsViewController: UIViewController {
                     self.reloadTableView()
                     self.teamName.text = self.viewModel?.getTeamName()
                     self.teamCoach.text = self.viewModel?.getCoachName()
-                    self.teamImg.sd_setImage(with: URL(string: self.viewModel?.getTeamLogo() ?? "placeholder"), placeholderImage: UIImage(named: "placeholder"))
+                    self.teamImg.sd_setImage(with: URL(string: self.viewModel?.getTeamLogo() ?? ""), placeholderImage: UIImage(named: "placeholder"))
                    // self.allLeaguesActivityIndicator.stopAnimating()
                 }
             }
@@ -49,8 +56,16 @@ class TeamDetailsViewController: UIViewController {
 
     @IBOutlet weak var favBtn: UIButton!
     @IBAction func addToFav(_ sender: UIButton) {
-        viewModel?.saveTeam()
-        favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        if valid{
+            viewModel?.saveTeam()
+            favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
+        else {
+            let alert = UIAlertController(title: "DataBase message", message: "Already existed", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
     }
     
     

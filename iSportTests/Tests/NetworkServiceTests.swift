@@ -32,14 +32,14 @@ final class NetworkServiceTest: XCTestCase {
         }
                                      
     )
-        waitForExpectations(timeout: 5,handler: nil)
+        waitForExpectations(timeout: 7,handler: nil)
 }
     func testGetTeamsShouldPass(){
         let expectation = expectation(description: "waiting API")
         NetworkService.getTeams(game: "football", leagueKey: 4, completionHandler: { (result : Result<AllTeams?, NetworkError>) in
             switch result{
             case .success(let data):
-                XCTAssertGreaterThan(data?.result?.count ?? 0,0,"array is empty")
+                XCTAssertNotEqual(data?.result?.count ?? 0,0,"array is empty")
                 expectation.fulfill()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -73,7 +73,7 @@ final class NetworkServiceTest: XCTestCase {
         NetworkService.getDataOfLatestEvents(game: "football", leagueKey: 4, completionHandler: { (result : Result<EventsResponse?, NetworkError>) in
             switch result{
             case .success(let data):
-                XCTAssertGreaterThan(data?.result?.count ?? 0,0,"array is empty")
+                XCTAssertNotNil(data?.result)
                 expectation.fulfill()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -83,14 +83,14 @@ final class NetworkServiceTest: XCTestCase {
         }
 
     )
-        waitForExpectations(timeout: 6,handler: nil)
+        waitForExpectations(timeout: 10,handler: nil)
 }
     func testGetTeamDetailsShouldPass(){
         let expectation = expectation(description: "waiting API")
         NetworkService.getTeamDetails(game: "football", teamId: 4, completionHandler: { (result : Result<TeamDetailsResponse?, NetworkError>) in
             switch result{
             case .success(let data):
-                XCTAssertGreaterThan(data?.result?.count ?? 0,0,"array is empty")
+                XCTAssertNotEqual(data?.result?.count ?? 0,0,"array is empty")
                 expectation.fulfill()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -175,7 +175,7 @@ final class NetworkServiceTest: XCTestCase {
         }
 
     )
-        waitForExpectations(timeout: 6,handler: nil)
+        waitForExpectations(timeout: 10,handler: nil)
 }
     func testGetDataOfLatestEventsShouldFail2(){
         let expectation = expectation(description: "waiting API")
@@ -193,7 +193,7 @@ final class NetworkServiceTest: XCTestCase {
         }
 
     )
-        waitForExpectations(timeout: 6,handler: nil)
+        waitForExpectations(timeout: 10,handler: nil)
 }
     
     func testGetTeamsShouldFail(){

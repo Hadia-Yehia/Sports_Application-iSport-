@@ -11,6 +11,7 @@ class TeamDetailsViewModel{
     var teamID : Int
     var game : String
     var dataSource : TeamDetails?
+    var favDataSource : [FavTeamData]?
     init(teamID: Int, game: String) {
         self.teamID = teamID
         self.game = game
@@ -32,6 +33,17 @@ class TeamDetailsViewModel{
                 break
     }
         }
+    }
+    func checkValidity()-> Bool{
+        favDataSource = FavDatabase.fetchTeamsFromDataBase()
+        for i in 0..<(favDataSource?.count ?? 0){
+            if favDataSource?[i].key == teamID{
+                print(favDataSource?[i].game)
+                return false
+            }
+        }
+        return true
+        
     }
     func saveTeam(){
         let team = FavTeamData(img: dataSource?.team_logo ?? "placeholder", name: dataSource?.team_name ?? "No Data", key: teamID, game: game)
