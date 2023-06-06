@@ -174,5 +174,14 @@ class LeagueDetailsViewModel{
         return TeamDetailsViewModel(teamID: teamID ?? 0 , game: game)
         
     }
+    func checkDetailsAvailability () -> Bool{
+        switch game {
+        case "tennis":
+            return false
+        default:
+            return true
+        }
+    }
+   
     
 }

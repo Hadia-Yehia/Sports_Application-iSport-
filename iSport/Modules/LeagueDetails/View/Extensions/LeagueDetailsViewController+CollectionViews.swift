@@ -54,9 +54,16 @@ extension LeagueDetailsViewController : UICollectionViewDelegate, UICollectionVi
         switch collectionView{
         case secondCollectionVIew:
             if NetworkReachability.sharedInstance.check(){
-                let teamDetailsVC = self.storyboard?.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
-                teamDetailsVC.viewModel = self.viewModel?.navigateToDetailsScreen(index: indexPath.row)
-                self.navigationController?.pushViewController(teamDetailsVC, animated: true)
+                if ((viewModel?.checkDetailsAvailability()) != false){
+                    let teamDetailsVC = self.storyboard?.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
+                    teamDetailsVC.viewModel = self.viewModel?.navigateToDetailsScreen(index: indexPath.row)
+                    self.navigationController?.pushViewController(teamDetailsVC, animated: true)
+                }
+                else {
+                    let alert = UIAlertController(title: "Sorry", message: "There is no details right now", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }else {
                 
                 let alert = UIAlertController(title: "Network issue", message: "No connection", preferredStyle: .alert)

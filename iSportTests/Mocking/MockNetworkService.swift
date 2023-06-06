@@ -7,11 +7,27 @@
 
 import Foundation
 @testable import iSport
-class MockNetworkService : Mockable{
+class MockNetworkService {
     var shouldReturnError : Bool
     init(shouldReturnError: Bool) {
         self.shouldReturnError = shouldReturnError
     }
+    let mockAllLeagues = """
+    {
+      "success": 1,
+      "result": [
+        {
+          "league_key": 4,
+          "league_name": "UEFA Europa League",
+          "country_key": 1,
+          "country_name": "eurocups",
+          "league_logo": "https://apiv2.allsportsapi.com/logo/logo_leagues/",
+          "country_logo": null
+        }
+      ]
+    }
+
+    """
     let mockUpComingEvent = """
       {
           "success": 1,
@@ -108,14 +124,14 @@ class MockNetworkService : Mockable{
             completionHandler(.failure(.urlError))
         }
         else{
-            do {
-                let result = try loadJSON(filename: "AllLeaguesData", type: AllLeagues.self)
-                
-                completionHandler(.success(result))
-            }catch let error {
+            do{
+                if let myData = mockAllLeagues.data(using: .utf8){
+                    do{
+                        let result = try JSONDecoder().decode(AllLeagues.self, from: myData)
+                        completionHandler(.success(result))}}
+            }catch let error{
                 print(error.localizedDescription)
                 completionHandler(.failure(.canNotParseData))
-                
             }
         }
     }
